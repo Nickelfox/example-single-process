@@ -13,6 +13,29 @@ const config = require('./config');
 const bus = oddcast.bus();
 const app = express();
 
+// Initialize Vimeo Client
+const vimeoProvider = require('oddworks-vimeo-provider');
+// See https://github.com/oddnetworks/oddworks/tree/master/lib/services/catalog#patterns
+// for more information regarding an Oddcast Bus.
+// const newbus = createMyOddcastBus();
+const vimeoAccessToken = "6f7a7567ccdc036ef50769e7539a1025"
+const options = {
+    bus: bus,
+    accessToken: vimeoAccessToken
+};
+
+vimeoProvider.initialize(options).then(provider => {
+    console.log('Initialized provider "%s"', provider.name);
+}).catch(err => {
+	    console.log('Initialization error ');
+    console.error(err.stack || err.message || err);
+});
+
+const client = vimeoProvider.createClient({
+    bus: bus,
+    accessToken: vimeoAccessToken
+});
+
 // Initialize oddcast for events, commands, requests
 bus.events.use(config.oddcast.events.options, config.oddcast.events.transport);
 bus.commands.use(config.oddcast.commands.options, config.oddcast.commands.transport);
@@ -50,6 +73,13 @@ module.exports = StoresUtils.load(bus, config.stores)
 			next();
 		});
 
+		app.get('/vimeo-videos', (req, res, next) => {
+			client.getVideos()
+			.then(videoRes => {
+				res.send(videoRes);
+			});
+		});
+		
 		app.use(oddworks.middleware['response-general']());
 		app.use(oddworks.middleware['response-vary']());
 		app.use(oddworks.middleware['response-cache-control']());

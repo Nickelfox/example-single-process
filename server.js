@@ -74,12 +74,12 @@ module.exports = StoresUtils.load(bus, config.stores)
 		});
 
 		app.get('/vimeo-videos', (req, res, next) => {
-			client.getVideos()
+			client.getVideos({req.params})
 			.then(videoRes => {
 				res.send(videoRes);
 			});
 		});
-		
+
 		app.use(oddworks.middleware['response-general']());
 		app.use(oddworks.middleware['response-vary']());
 		app.use(oddworks.middleware['response-cache-control']());

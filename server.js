@@ -72,9 +72,10 @@ module.exports = StoresUtils.load(bus, config.stores)
 			};
 			next();
 		});
-
 		app.get('/vimeo-videos', (req, res, next) => {
-			client.getVideos({req.params})
+			const query = req.query
+			console.log(req.query)
+			client.getVideos({query})
 			.then(videoRes => {
 				res.send(videoRes);
 			});

@@ -18,7 +18,10 @@ const vimeoProvider = require('oddworks-vimeo-provider');
 // See https://github.com/oddnetworks/oddworks/tree/master/lib/services/catalog#patterns
 // for more information regarding an Oddcast Bus.
 // const newbus = createMyOddcastBus();
-const vimeoAccessToken = "6f7a7567ccdc036ef50769e7539a1025"
+//Somedrones
+const vimeoAccessToken = "f896155c2880bcfe20837359eb3ee75a"
+// Timestance
+// const vimeoAccessToken = "6f7a7567ccdc036ef50769e7539a1025"
 const options = {
     bus: bus,
     accessToken: vimeoAccessToken
